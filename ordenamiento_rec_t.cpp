@@ -22,15 +22,13 @@ duration<double> crear_arreglo(int *A, int TAM_ARREGLO, int RANGO_MAX) {
     return tiempo;
 }
 
-
-duration<double> ordenar_merge_sort(int* A, int TAM_ARREGLO) {
-    high_resolution_clock::time_point inicio = high_resolution_clock::now();
-    merge_sort(A, 0, TAM_ARREGLO-1);
-    high_resolution_clock::time_point fin = high_resolution_clock::now();
-    duration<double> tiempo = duration_cast<duration<double> >(fin - inicio);
+duration<double> ordenar_merge_sort(int* A, int inicio, int fin, int k) {
+    high_resolution_clock::time_point inicio_tiempo = high_resolution_clock::now();
+    merge_sort(A, inicio, fin, k);
+    high_resolution_clock::time_point fin_tiempo = high_resolution_clock::now();
+    duration<double> tiempo = duration_cast<duration<double>>(fin_tiempo - inicio_tiempo);
     return tiempo;
 }
-
 
 duration<double> ordenar_quicksort(int* A, int TAM_ARREGLO) {
     high_resolution_clock::time_point inicio = high_resolution_clock::now();
@@ -39,7 +37,6 @@ duration<double> ordenar_quicksort(int* A, int TAM_ARREGLO) {
     duration<double> tiempo = duration_cast<duration<double> >(fin - inicio);
     return tiempo;
 }
-
 
 int* copiar_arreglo(int A[], int n) {
     int *aux = new int[n];
@@ -79,15 +76,16 @@ void experimentos(int tam, int reps, bool ms, bool qs) {
         cout << "\tTiempo: " << tiempo.count() << "s" << endl;
 
         int *aux;
-        if (ms) {
-            aux = copiar_arreglo(A, TAM_ARREGLO);
-            cout << "Iniciando ordenamiento con MERGE SORT... " << flush;
-            tiempo = ordenar_merge_sort(aux, TAM_ARREGLO);
-            cout << "\tOrdenado. ";
-            cout << "\tTiempo: " << tiempo.count() << "s" << endl;
-            t_prom_ms = t_prom_ms + tiempo.count();
-            delete [] aux;
+       if (ms) {
+        aux = copiar_arreglo(A, TAM_ARREGLO);
+        cout << "Iniciando ordenamiento con MERGE SORT MODIFICADO... " << flush;
+        tiempo = ordenar_merge_sort(aux, 0, TAM_ARREGLO - 1, 0);
+        cout << "\tOrdenado. ";
+        cout << "\tTiempo: " << tiempo.count() << "s" << endl;
+        t_prom_ms = t_prom_ms + tiempo.count();
+        delete [] aux;
         }
+
 
         if (qs) {
             aux = copiar_arreglo(A, TAM_ARREGLO);

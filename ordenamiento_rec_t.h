@@ -1,3 +1,8 @@
+#ifndef ORDENAMIENTO_REC_T_H
+#define ORDENAMIENTO_REC_T_H
+
+#include "ordenamiento_t.h"
+
 void merge(int A[], int inicio, int medio, int fin) {
     int *aux = new int[fin - inicio + 1];
     int i = inicio;     // índice de la primera mitad
@@ -43,24 +48,27 @@ void merge(int A[], int inicio, int medio, int fin) {
     delete [] aux;
 }
 
-void merge_sort(int A[], int inicio, int fin) {
-    if (inicio < fin) {
-        int medio = (inicio + fin) / 2;
-        merge_sort(A, inicio, medio);
-        merge_sort(A, medio + 1, fin);
-        merge(A, inicio, medio, fin);
+    // Función de ordenamiento por fusión (merge sort)
+    #include <algorithm> // Necesario para std::sort
+    void merge_sort(int A[], int inicio, int fin, int k) {
+        if (inicio < fin) {
+            // Si el tamaño de la sublista es menor o igual a k, usar std::sort
+            if (fin - inicio + 1 <= k) {
+                std::sort(A + inicio, A + fin + 1);
+            } else {
+                int medio = (inicio + fin) / 2;
+                merge_sort(A, inicio, medio, k);
+                merge_sort(A, medio + 1, fin, k);
+                merge(A, inicio, medio, fin);
+            }
+        }
     }
-}
 
 
 
 
 
-void intercambiar(int A[], int x, int y) {
-    int aux = A[x];
-    A[x] = A[y];
-    A[y] = aux;
-}
+
 
 int partition(int A[], int p, int r) {
     // A[r] es el registro elegido cuya llave será el pivote
@@ -91,3 +99,5 @@ void quicksort(int A[], int p, int r) {
         quicksort(A, q + 1, r);
     }
 }
+
+ #endif // ORDENAMIENTO_REC_T_H
