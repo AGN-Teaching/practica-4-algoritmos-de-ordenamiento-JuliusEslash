@@ -1,3 +1,6 @@
+#ifndef ORDENAMIENTO_T_H
+#define ORDENAMIENTO_T_H
+
 void intercambiar(int A[], int x, int y) {
     int aux = A[x];
     A[x] = A[y];
@@ -49,3 +52,5 @@ void bubblesort(int A[], int n) {
         }
     }
 }
+
+#endif // ORDENAMIENTO_T_H
